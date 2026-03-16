@@ -1,0 +1,3 @@
+I recently picked up what I though would be a relatively straightforward five point story. We have a WCF service that was talking to our main .Net API using http Rest requests. We wanted to reduce this coupling, and utilize our Azure Comms Bus to give our various services a more coherent coupling strategy.
+
+As I had pushed for the introduction of the Comms Bus in the first place, I felt a little duty-bound to pick up this particular story. In my initial naivety, I thought I would simply create some sort of long running service to handle the Comms Bus messages, inject some sort of delegate to process the specific request type, and that’s it — what could possibly go wrong!
