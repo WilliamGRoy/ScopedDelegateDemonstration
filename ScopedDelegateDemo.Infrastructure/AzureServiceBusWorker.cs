@@ -7,16 +7,16 @@ namespace ScopedDelegateDemo.Infrastructure;
 
 public class AzureServiceBusWorker : BackgroundService
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceScopeFactory _scopeFactory;
     private readonly ServiceBusProcessor _processor;
     private readonly ILogger<AzureServiceBusWorker> _logger;
 
     public AzureServiceBusWorker(
-        IServiceProvider serviceProvider,
+        IServiceScopeFactory scopeFactory,
         ServiceBusProcessor processor,
         ILogger<AzureServiceBusWorker> logger)
     {
-        _serviceProvider = serviceProvider;
+        _scopeFactory = scopeFactory;
         _processor = processor;
         _logger = logger;
     }
@@ -41,7 +41,7 @@ public class AzureServiceBusWorker : BackgroundService
 
     private async Task MessageHandler(ProcessMessageEventArgs args)
     {
-        using (var scope = _serviceProvider.CreateScope())
+        using (IServiceScope scope = _scopeFactory.CreateScope())
         {
             try
             {
